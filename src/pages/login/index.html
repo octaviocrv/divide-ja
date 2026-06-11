@@ -326,6 +326,7 @@
       color: var(--text);
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
       -webkit-appearance: none;
     }
 
@@ -615,52 +616,8 @@
         icon.classList.replace('fa-eye-slash', 'fa-eye');
       }
     }
-
-    // Chama a função original de Login definida em script.js
-    // Se não existir, redireciona para home
-    function Login() {
-      const login = document.getElementById('login').value.trim();
-      const senha = document.getElementById('senha').value.trim();
-      if (!login || !senha) {
-        // shake no botão
-        const btn = document.querySelector('.btn-login');
-        btn.style.animation = 'none';
-        btn.offsetHeight; // reflow
-        btn.style.animation = 'shake 0.35s ease';
-        return;
-      }
-      // Delegar para lógica original em script.js
-      if (typeof window._originalLogin === 'function') window._originalLogin();
-      else location.href = '../home/index.html';
-    }
   </script>
 
-  <!-- CSS do shake inline para não depender de arquivo externo -->
-  <style>
-    @keyframes shake {
-
-      0%,
-      100% {
-        transform: translateX(0);
-      }
-
-      20% {
-        transform: translateX(-6px);
-      }
-
-      40% {
-        transform: translateX(6px);
-      }
-
-      60% {
-        transform: translateX(-4px);
-      }
-
-      80% {
-        transform: translateX(4px);
-      }
-    }
-  </style>
 
   <script src="./script.js"></script>
 </body>
