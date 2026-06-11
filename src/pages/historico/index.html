@@ -1,113 +1,716 @@
 <!DOCTYPE html>
-<html lang="pt_br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Divide Já</title>
-    <!-- CSS Projeto --->
-    <link rel="stylesheet" href="../historico/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    />
-  </head>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divide Já — Histórico</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:          #0d0f14;
+      --surface:     #13161e;
+      --surface-2:   #1a1e28;
+      --border:      rgba(255,255,255,0.06);
+      --accent:      #c8f135;
+      --accent-dim:  rgba(200,241,53,0.10);
+      --accent-glow: rgba(200,241,53,0.25);
+      --text:        #f0f2f5;
+      --text-muted:  #5a6070;
+      --text-mid:    #8b929f;
+      --danger:      #ff4e4e;
+      --green-soft:  rgba(52,211,153,0.12);
+      --green:       #34d399;
+      --nav-w:       240px;
+      --radius:      16px;
+      --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-  <body>
-    <!-- Nav Bar --->
-    <nav>
-      <ul>
-        <li>
-          <a href="#" class="usuario">
-            <img src="../../assets/images/gordinho.jpg" alt="" />
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      width: var(--nav-w);
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 100;
+      padding: 24px 0 32px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 2px;
+    }
+
+    nav ul li:first-child {
+      padding: 0 16px 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .usuario {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; padding: 10px 12px;
+      border-radius: 12px; transition: background 0.2s;
+    }
+    .usuario:hover { background: var(--accent-dim); }
+
+    .usuario img {
+      width: 42px; height: 42px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--accent); flex-shrink: 0;
+    }
+
+    .nav-titulo {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      color: var(--text); display: block; line-height: 1.2;
+    }
+
+    .nav-subtitulo {
+      font-size: 11px; color: var(--accent);
+      font-weight: 500; letter-spacing: 0.05em; display: block;
+    }
+
+    nav ul li a.padding-icon {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 28px; text-decoration: none;
+      color: var(--text-mid); font-size: 14px;
+      transition: color 0.2s, background 0.2s; position: relative;
+    }
+
+    nav ul li a.padding-icon::before {
+      content: ''; position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 3px; height: 60%; background: var(--accent);
+      border-radius: 0 3px 3px 0; transition: transform 0.2s var(--ease);
+    }
+
+    nav ul li a.padding-icon:hover,
+    nav ul li a.padding-icon.active { color: var(--text); background: var(--accent-dim); }
+
+    nav ul li a.padding-icon:hover::before,
+    nav ul li a.padding-icon.active::before { transform: translateY(-50%) scaleY(1); }
+
+    nav ul li a.padding-icon i { width: 18px; font-size: 15px; text-align: center; flex-shrink: 0; }
+    nav ul li a.padding-icon.active i { color: var(--accent); }
+
+    nav ul li:last-child { margin-top: auto; padding: 0 16px; }
+
+    .logout {
+      display: flex; align-items: center; gap: 12px; padding: 11px 12px;
+      text-decoration: none; color: var(--text-muted); font-size: 14px;
+      border-radius: 10px; transition: color 0.2s, background 0.2s;
+    }
+    .logout:hover { color: var(--danger); background: rgba(255,78,78,0.08); }
+
+    /* ── MAIN ── */
+    main {
+      margin-left: var(--nav-w);
+      flex: 1;
+      padding: 32px 40px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeUp 0.45s var(--ease) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px; font-weight: 800;
+      letter-spacing: -0.5px; color: var(--text);
+    }
+
+    .page-header h1 span { color: var(--accent); }
+    .page-header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    .date-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px; font-weight: 700;
+      color: var(--text-mid);
+      white-space: nowrap;
+      align-self: flex-start;
+    }
+
+    .date-chip i { color: var(--accent); font-size: 12px; }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* buscar generico */
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 360px;
+    }
+
+    .search-wrap i {
+      position: absolute;
+      left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted); font-size: 13px; pointer-events: none;
+    }
+
+    .search-wrap input {
+      width: 100%; height: 42px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 16px 0 38px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-wrap input::placeholder { color: var(--text-muted); }
+
+    .search-wrap input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    /* filtros */
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px; font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+
+    .filter-chip:hover { color: var(--text); border-color: rgba(255,255,255,0.14); background: var(--surface-2); }
+
+    .filter-chip.active {
+      background: var(--accent-dim);
+      border-color: rgba(200,241,53,0.3);
+      color: var(--accent);
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Separador de mês */
+    .month-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .month-label span {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .month-label::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: var(--border);
+    }
+
+    /* Card de mesa */
+    .mesa-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: border-color 0.2s, background 0.2s, transform 0.18s;
+      cursor: pointer;
+      animation: rowIn 0.35s var(--ease) both;
+      text-decoration: none;
+    }
+
+    @keyframes rowIn {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .mesa-card:hover {
+      border-color: rgba(200,241,53,0.2);
+      background: var(--surface-2);
+      transform: translateX(3px);
+    }
+
+    .mesa-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .mesa-info { flex: 1; min-width: 0; }
+
+    .mesa-nome {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px; font-weight: 700;
+      color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .mesa-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .meta-item i { font-size: 11px; }
+
+    /* Avatares em pilha */
+    .avatars {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar-sm {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 2px solid var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 10px; font-weight: 700;
+      color: var(--accent);
+      margin-left: -8px;
+      flex-shrink: 0;
+    }
+
+    .avatar-sm:first-child { margin-left: 0; }
+
+    .avatar-more {
+      background: var(--surface-2);
+      border: 2px solid var(--surface);
+      color: var(--text-muted);
+      font-size: 9px;
+    }
+
+    /* Valor total */
+    .mesa-total {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .mesa-total .valor {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px; font-weight: 800;
+      color: var(--text);
+      display: block;
+    }
+
+    .mesa-total .por-pessoa {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      display: block;
+    }
+
+    .status-badge {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: 'Syne', sans-serif;
+      font-size: 11px; font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-done {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    /* Seta */
+    .mesa-arrow {
+      color: var(--text-muted);
+      font-size: 13px;
+      flex-shrink: 0;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .mesa-card:hover .mesa-arrow {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 72px 20px;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 64px; height: 64px;
+      border-radius: 18px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .empty-state h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px; font-weight: 700; color: var(--text-mid);
+    }
+
+    .empty-state p {
+      font-size: 13px; color: var(--text-muted);
+      max-width: 260px; line-height: 1.6;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px;
+      background: var(--accent); color: #0d0f14;
+      border: none; border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer; margin-top: 4px;
+      transition: all 0.2s var(--ease);
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background: #d8ff45;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    .fab {
+      position: fixed;
+      bottom: 32px; right: 36px;
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      transition: all 0.2s var(--ease);
+      opacity: 0; pointer-events: none;
+      z-index: 90;
+    }
+
+    .fab.visible { opacity: 1; pointer-events: all; }
+    .fab:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <ul>
+      <li>
+        <a href="#" class="usuario">
+          <img src="../../assets/images/gordinho.jpg" alt="Foto de perfil" />
+          <div>
             <span class="nav-titulo">Felipe Monteleão</span>
             <span class="nav-subtitulo">#3345</span>
-          </a>
-        </li>
+          </div>
+        </a>
+      </li>
 
-        <li>
-          <a class="padding-icon" href="../home/index.html">
-            <i class="fas fa-home"></i>
-            <span class="item-nav">Inicio</span>
-          </a>
-        </li>
+      <li>
+        <a class="padding-icon" href="../home/index.html">
+          <i class="fas fa-home"></i>
+          <span class="item-nav">Início</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../ranking/index.html">
+          <i class="fas fa-user-group"></i>
+          <span class="item-nav">Amigos</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../nova-mesa/index.html">
+          <i class="fas fa-plus"></i>
+          <span class="item-nav">Criar nova mesa</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon active" href="../historico/index.html">
+          <i class="fas fa-clock-rotate-left"></i>
+          <span class="item-nav">Histórico</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../configuracoes/index.html">
+          <i class="fas fa-cog"></i>
+          <span class="item-nav">Configurações</span>
+        </a>
+      </li>
+      <li>
+        <a href="../login/index.html" class="logout">
+          <i class="fas fa-sign-out"></i>
+          <span class="item-nav">Sair</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-        <li>
-          <a class="padding-icon" href="../ranking/index.html">
-            <i class="fas fa-user"></i>
-            <span class="item-nav">Amigos</span>
-          </a>
-        </li>
+  <!-- ── MAIN ── -->
+  <main>
 
-        <li>
-          <a class="padding-icon" href="../nova-mesa/index.html">
-            <i class="fas fa-plus"></i>
-            <span class="item-nav">Criar nova mesa</span>
-          </a>
-        </li>
-
-        <li>
-          <a class="padding-icon" href="../historico/index.html">
-            <i class="fas fa-clock-rotate-left"></i>
-            <span class="item-nav">Historico</span>
-          </a>
-        </li>
-
-        <li>
-          <a class="padding-icon" href="../configuracoes/index.html">
-            <i class="fas fa-cog"></i>
-            <span class="item-nav">Configurações</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="../login/index.html" class="logout">
-            <i class="fas fa-sign-out"></i>
-            <span class="item-nav">Sair</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <!-- Nav fim --->
-
-    <!-- Conteudo--->
-
-    <main>
-      
-      
-      <header class="content_header">
-        <div class="content_amigo">
-          <h3>Buscar por amigo</h3>
-          <form id="form">
-            <input type="search" id="query" name="q" placeholder="Digite aqui..." />
-            <button>Pesquisar</button>
-          </form>
-        </div>
-        <div class="content_historico">
-          <h1>Historico</h1>
-          <h3>Acompanhe suas mesas criadas</h3>
-          <form id="form">
-            <input type="search" id="query" name="q" placeholder="Digite aqui.." />
-            <button>Pesquisar</button>
-          </form>
-        </div>
-        <div class="content_data">
-          <h1>Data Atual</h1>
-          <h3>10/10/2022</h3>
-        </div>
-      </header>
-
-      <div class="conteudo">
-        <h3>Nenhum historico disponivel no momento</h3>
+    <!-- Header -->
+    <header class="page-header">
+      <div>
+        <h1>Seu <span>Histórico</span></h1>
+        <p>Acompanhe todas as mesas criadas</p>
       </div>
+      <div class="date-chip">
+        <i class="fas fa-calendar-day"></i>
+        <span id="dataAtual">—</span>
+      </div>
+    </header>
 
-      <footer class="btns">
-        <button type="button"><h2>Voltar ao topo!</h2></button>
-      </footer>
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <i class="fas fa-magnifying-glass"></i>
+        <input
+          type="search"
+          id="searchMesa"
+          placeholder="Buscar mesa ou local..."
+          oninput="filtrar()"
+        />
+      </div>
+      <div class="search-wrap">
+        <i class="fas fa-user"></i>
+        <input
+          type="search"
+          id="searchAmigo"
+          placeholder="Buscar por amigo..."
+          oninput="filtrar()"
+        />
+      </div>
+      <div class="filter-group">
+        <button class="filter-chip active" data-filter="todos" onclick="setFiltro(this)">Todos</button>
+        <button class="filter-chip" data-filter="recentes" onclick="setFiltro(this)">Recentes</button>
+        <button class="filter-chip" data-filter="maiores" onclick="setFiltro(this)">Maiores</button>
+      </div>
+    </div>
+
+    <!-- Lista de histórico -->
+    <div class="history-list" id="historyList">
+      <!-- Preenchido pelo JS -->
+    </div>
+
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="empty-icon"><i class="fas fa-clock-rotate-left"></i></div>
+      <h3>Nenhum histórico disponível</h3>
+      <p>Quando você encerrar uma mesa ela aparecerá aqui para consulta</p>
+      <a class="btn-primary" href="../nova-mesa/index.html">
+        <i class="fas fa-plus"></i> Criar mesa
+      </a>
+    </div>
+
+  </main>
+
+  <!--  voltar ao topo -->
+  <button class="fab" id="fabTopo" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    /* ── data atual ── */
+    const dataAtual = new Date();
+    document.getElementById('dataAtual').textContent =
+      dataAtual.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' });
 
 
-    </main>
+    let mesas = []; // <- popular futuramente
 
-    <!-- Conteudo--->
-  </body>
+    /* ── Renderizar ── */
+    function renderizar(lista) {
+      const container = document.getElementById('historyList');
+      const empty     = document.getElementById('emptyState');
+
+      if (!lista || lista.length === 0) {
+        container.innerHTML = '';
+        empty.style.display = 'flex';
+        return;
+      }
+
+      empty.style.display = 'none';
+
+      // faz agrupamento por mês
+      const grupos = {};
+      lista.forEach(m => {
+        const d   = new Date(m.data);
+        const key = d.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+        if (!grupos[key]) grupos[key] = [];
+        grupos[key].push(m);
+      });
+
+      container.innerHTML = Object.entries(grupos).map(([mes, items]) => `
+        <div class="month-label"><span>${mes}</span></div>
+        ${items.map((m, i) => {
+          const avatares = (m.pessoas || []).slice(0, 3)
+            .map(p => `<div class="avatar-sm">${(p[0] || '?').toUpperCase()}</div>`)
+            .join('');
+          const extra = (m.pessoas || []).length > 3
+            ? `<div class="avatar-sm avatar-more">+${m.pessoas.length - 3}</div>` : '';
+          const total    = parseFloat(m.total || 0).toFixed(2).replace('.', ',');
+          const porPesso = m.pessoas?.length
+            ? (parseFloat(m.total || 0) / m.pessoas.length).toFixed(2).replace('.', ',') : '—';
+          const dataStr  = new Date(m.data).toLocaleDateString('pt-BR');
+
+          return `
+            <div class="mesa-card" style="animation-delay:${i * 0.04}s" data-local="${m.local}" data-pessoas="${(m.pessoas||[]).join(',')}">
+              <div class="mesa-icon">${m.emoji || '🍽️'}</div>
+              <div class="mesa-info">
+                <div class="mesa-nome">${m.local || 'Sem nome'}</div>
+                <div class="mesa-meta">
+                  <span class="meta-item"><i class="fas fa-calendar"></i> ${dataStr}</span>
+                  ${(m.pessoas||[]).length ? `
+                    <span class="meta-item">
+                      <div class="avatars">${avatares}${extra}</div>
+                      &nbsp;${m.pessoas.length} pessoa${m.pessoas.length !== 1 ? 's' : ''}
+                    </span>` : ''}
+                  ${m.taxa ? `<span class="meta-item"><i class="fas fa-percent"></i> ${m.taxa}%</span>` : ''}
+                  ${m.couvert ? `<span class="meta-item"><i class="fas fa-music"></i> R$ ${parseFloat(m.couvert).toFixed(2).replace('.',',')}</span>` : ''}
+                </div>
+              </div>
+              <span class="status-badge status-done">Encerrada</span>
+              <div class="mesa-total">
+                <span class="valor">R$ ${total}</span>
+                <span class="por-pessoa">R$ ${porPesso}/pessoa</span>
+              </div>
+              <i class="fas fa-chevron-right mesa-arrow"></i>
+            </div>
+          `;
+        }).join('')}
+      `).join('');
+    }
+
+    /* ── filtro ── */
+    let filtroAtivo = 'todos';
+
+    function setFiltro(btn) {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      filtroAtivo = btn.dataset.filter;
+      filtrar();
+    }
+
+    function filtrar() {
+      const termMesa  = document.getElementById('searchMesa').value.trim().toLowerCase();
+      const termAmigo = document.getElementById('searchAmigo').value.trim().toLowerCase();
+
+      let lista = [...mesas];
+
+      if (termMesa)  lista = lista.filter(m => (m.local || '').toLowerCase().includes(termMesa));
+      if (termAmigo) lista = lista.filter(m => (m.pessoas || []).some(p => p.toLowerCase().includes(termAmigo)));
+
+      if (filtroAtivo === 'recentes') {
+        lista = [...lista].sort((a, b) => new Date(b.data) - new Date(a.data)).slice(0, 10);
+      } else if (filtroAtivo === 'maiores') {
+        lista = [...lista].sort((a, b) => parseFloat(b.total) - parseFloat(a.total));
+      }
+
+      renderizar(lista);
+    }
+
+    window.addEventListener('scroll', () => {
+      const fab = document.getElementById('fabTopo');
+      fab.classList.toggle('visible', window.scrollY > 300);
+    });
+
+    /* ── Init ── */
+    // o script.js externo popular window.mesasHistorico, usa ele
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof window.mesasHistorico !== 'undefined') {
+        mesas = window.mesasHistorico;
+      }
+      renderizar(mesas);
+    });
+  </script>
+
+  <script src="../historico/script.js" onerror="renderizar([])"></script>
+</body>
 </html>

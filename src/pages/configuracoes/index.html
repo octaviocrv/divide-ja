@@ -1,109 +1,793 @@
 <!DOCTYPE html>
-<html lang="pt_br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Divide Já</title>
-    <!-- CSS Projeto --->
-    <link rel="stylesheet" href="../configuracoes/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    />
-  </head>
- 
-  <body>
-    <!-- Nav Bar --->
-    <nav>
-      <ul>
-        <li>
-          <a href="#" class="usuario">
-            <img src="../../assets/images/gordinho.jpg" alt="" />
-            <span class="nav-titulo">Felipe Monteleão</span>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divide Já — Configurações</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:          #0d0f14;
+      --surface:     #13161e;
+      --surface-2:   #1a1e28;
+      --border:      rgba(255,255,255,0.06);
+      --accent:      #c8f135;
+      --accent-dim:  rgba(200,241,53,0.10);
+      --accent-glow: rgba(200,241,53,0.25);
+      --text:        #f0f2f5;
+      --text-muted:  #5a6070;
+      --text-mid:    #8b929f;
+      --danger:      #ff4e4e;
+      --danger-dim:  rgba(255,78,78,0.10);
+      --nav-w:       240px;
+      --radius:      16px;
+      --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      width: var(--nav-w);
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0;
+      z-index: 100; padding: 24px 0 32px;
+    }
+
+    nav ul { list-style: none; display: flex; flex-direction: column; height: 100%; gap: 2px; }
+
+    nav ul li:first-child { padding: 0 16px 28px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+
+    .usuario {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; padding: 10px 12px;
+      border-radius: 12px; transition: background 0.2s;
+    }
+    .usuario:hover { background: var(--accent-dim); }
+
+    .usuario img {
+      width: 42px; height: 42px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--accent); flex-shrink: 0;
+    }
+
+    .nav-titulo {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      color: var(--text); display: block; line-height: 1.2;
+    }
+    .nav-subtitulo { font-size: 11px; color: var(--accent); font-weight: 500; letter-spacing: 0.05em; display: block; }
+
+    nav ul li a.padding-icon {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 28px; text-decoration: none;
+      color: var(--text-mid); font-size: 14px;
+      transition: color 0.2s, background 0.2s; position: relative;
+    }
+
+    nav ul li a.padding-icon::before {
+      content: ''; position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 3px; height: 60%; background: var(--accent);
+      border-radius: 0 3px 3px 0; transition: transform 0.2s var(--ease);
+    }
+
+    nav ul li a.padding-icon:hover,
+    nav ul li a.padding-icon.active { color: var(--text); background: var(--accent-dim); }
+
+    nav ul li a.padding-icon:hover::before,
+    nav ul li a.padding-icon.active::before { transform: translateY(-50%) scaleY(1); }
+
+    nav ul li a.padding-icon i { width: 18px; font-size: 15px; text-align: center; flex-shrink: 0; }
+    nav ul li a.padding-icon.active i { color: var(--accent); }
+
+    nav ul li:last-child { margin-top: auto; padding: 0 16px; }
+
+    .logout {
+      display: flex; align-items: center; gap: 12px; padding: 11px 12px;
+      text-decoration: none; color: var(--text-muted); font-size: 14px;
+      border-radius: 10px; transition: color 0.2s, background 0.2s;
+    }
+    .logout:hover { color: var(--danger); background: rgba(255,78,78,0.08); }
+
+    /* ── MAIN ── */
+    main {
+      margin-left: var(--nav-w);
+      flex: 1;
+      padding: 32px 40px 72px;
+      display: flex; flex-direction: column; gap: 28px;
+      animation: fadeUp 0.45s var(--ease) both;
+      max-width: calc(100vw - var(--nav-w));
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: var(--text);
+    }
+    .page-header h1 span { color: var(--accent); }
+    .page-header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ── LAYOUT 2 COL ── */
+    .settings-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .settings-col { display: flex; flex-direction: column; gap: 16px; }
+
+    /* ── SECTION CARD ── */
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .section-card:hover { border-color: rgba(200,241,53,0.12); }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-head-icon {
+      width: 32px; height: 32px; border-radius: 9px;
+      background: var(--accent-dim);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: 13px; flex-shrink: 0;
+    }
+
+    .section-head h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px; font-weight: 700; color: var(--text);
+    }
+
+    .section-head p { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+    /* ── SETTING ROW ── */
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.18s;
+    }
+
+    .setting-row:last-child { border-bottom: none; }
+    .setting-row:hover { background: rgba(255,255,255,0.015); }
+
+    .setting-info { flex: 1; min-width: 0; }
+
+    .setting-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .setting-label i { color: var(--accent); font-size: 12px; }
+
+    .setting-desc { font-size: 12px; color: var(--text-muted); margin-top: 3px; line-height: 1.4; }
+
+    /* ── CONTROLS ── */
+
+    /* Input inline */
+    .inline-input {
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .inline-input input {
+      height: 38px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 0 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; color: var(--text);
+      outline: none; width: 190px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .inline-input input::placeholder { color: var(--text-muted); }
+    .inline-input input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+
+    /* Select */
+    .styled-select {
+      height: 38px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 0 32px 0 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; color: var(--text);
+      outline: none; cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a6070' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      transition: border-color 0.2s;
+    }
+
+    .styled-select:focus { border-color: var(--accent); }
+
+    /* Toggle switch */
+    .toggle-wrap { display: flex; align-items: center; gap: 10px; }
+
+    .toggle {
+      position: relative;
+      width: 42px; height: 24px;
+      flex-shrink: 0;
+    }
+
+    .toggle input { display: none; }
+
+    .toggle-track {
+      position: absolute; inset: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      top: 3px; left: 3px;
+      transition: transform 0.22s var(--ease), background 0.2s;
+    }
+
+    .toggle input:checked + .toggle-track { background: var(--accent-dim); border-color: var(--accent); }
+    .toggle input:checked + .toggle-track::after { transform: translateX(18px); background: var(--accent); }
+
+    .toggle-label { font-size: 12px; color: var(--text-muted); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 16px; border-radius: 9px;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+      cursor: pointer; border: none;
+      transition: all 0.18s var(--ease); letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .btn-sm-ghost {
+      background: transparent; color: var(--text-mid); border: 1px solid var(--border);
+    }
+    .btn-sm-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.14); background: var(--surface-2); }
+
+    .btn-sm-accent {
+      background: var(--accent); color: #0d0f14;
+    }
+    .btn-sm-accent:hover { background: #d8ff45; box-shadow: 0 0 16px var(--accent-glow); }
+
+    .btn-sm-danger {
+      background: transparent; color: var(--danger); border: 1px solid rgba(255,78,78,0.2);
+    }
+    .btn-sm-danger:hover { background: var(--danger-dim); border-color: rgba(255,78,78,0.4); }
+
+    /* ── PROFILE CARD (lateral) ── */
+    .profile-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      text-align: center;
+      position: sticky; top: 32px;
+    }
+
+    .profile-avatar-wrap {
+      position: relative;
+      width: 88px; height: 88px;
+    }
+
+    .profile-avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      display: block;
+    }
+
+    .avatar-upload-btn {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0d0f14;
+      font-size: 11px;
+      border: 2px solid var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.18s;
+    }
+
+    .avatar-upload-btn:hover { background: #d8ff45; transform: scale(1.1); }
+
+    #fileInput { display: none; }
+
+    .profile-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px; font-weight: 800; color: var(--text);
+    }
+
+    .profile-tag {
+      font-size: 12px; color: var(--accent); font-weight: 500; margin-top: -8px;
+    }
+
+    .profile-divider { width: 100%; height: 1px; background: var(--border); }
+
+    .profile-stat {
+      width: 100%;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border); border-radius: 10px;
+    }
+
+    .profile-stat-label { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 7px; }
+    .profile-stat-label i { color: var(--accent); font-size: 11px; }
+    .profile-stat-val { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); }
+
+    /* ── SAVE BAR ── */
+    .save-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+
+    .save-bar p { font-size: 12px; color: var(--text-muted); }
+
+    .save-actions { display: flex; gap: 10px; }
+
+    .btn-cancel {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 11px 22px; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      cursor: pointer; border: 1px solid var(--border);
+      background: transparent; color: var(--text-mid);
+      transition: all 0.2s var(--ease);
+    }
+    .btn-cancel:hover { color: var(--text); border-color: rgba(255,255,255,0.14); background: var(--surface-2); }
+
+    .btn-save {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 11px 24px; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      cursor: pointer; border: none;
+      background: var(--accent); color: #0d0f14;
+      transition: all 0.2s var(--ease);
+    }
+    .btn-save:hover { background: #d8ff45; box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-1px); }
+
+    /* ── DANGER ZONE ── */
+    .danger-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,78,78,0.15);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .danger-card .section-head { border-bottom-color: rgba(255,78,78,0.12); }
+    .danger-card .section-head-icon { background: rgba(255,78,78,0.1); color: var(--danger); }
+    .danger-card .section-head h2 { color: var(--danger); }
+
+    /* ── MODAL (alterar senha) ── */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65); backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.22s var(--ease);
+    }
+
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px; width: 100%; max-width: 400px;
+      display: flex; flex-direction: column; gap: 20px;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.25s var(--ease);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+
+    .modal-backdrop.open .modal { transform: translateY(0) scale(1); }
+
+    .modal-header { display: flex; align-items: center; justify-content: space-between; }
+
+    .modal-header h2 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); }
+
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 9px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); font-size: 14px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.18s;
+    }
+    .modal-close:hover { color: var(--danger); border-color: rgba(255,78,78,0.3); background: rgba(255,78,78,0.08); }
+
+    .modal-field label { display: block; font-size: 12px; font-weight: 500; color: var(--text-mid); margin-bottom: 7px; }
+
+    .modal-field .mw { position: relative; }
+    .modal-field .mw i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 13px; pointer-events: none; }
+
+    .modal-field input {
+      width: 100%; height: 48px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0 16px 0 38px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .modal-field input::placeholder { color: var(--text-muted); }
+    .modal-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+    /* ── FOOTER ── */
+    .page-footer { font-size: 12px; color: var(--text-muted); text-align: center; padding-top: 8px; }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <ul>
+      <li>
+        <a href="#" class="usuario">
+          <img src="../../assets/images/gordinho.jpg" alt="Foto de perfil" id="navAvatar" />
+          <div>
+            <span class="nav-titulo" id="navNome">Felipe Monteleão</span>
             <span class="nav-subtitulo">#3345</span>
-          </a>
-        </li>
-
-        <li>
-          <a class="padding-icon" href="../home/index.html">
-            <i class="fas fa-home"></i>
-            <span class="item-nav">Inicio</span>
-          </a>
-        </li>
-
-        <li>
-          <a class="padding-icon" href="../ranking/index.html">
-            <i class="fas fa-user"></i>
-            <span class="item-nav">Amigos</span>
-          </a>
-        </li>
-
-        <li>
-          <a class="padding-icon" href="../nova-mesa/index.html">
-            <i class="fas fa-plus"></i>
-            <span class="item-nav">Criar nova mesa</span>
-          </a>
-        </li>
-
-        <li>
-          <a class="padding-icon" href="../historico/index.html">
-            <i class="fas fa-clock-rotate-left"></i>
-            <span class="item-nav">Historico</span>
-          </a>
-        </li>
-
-        <li>
-          <a class="padding-icon" href="../configuracoes/index.html">
-            <i class="fas fa-cog"></i>
-            <span class="item-nav">Configurações</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="../login/index.html" class="logout">
-            <i class="fas fa-sign-out"></i>
-            <span class="item-nav">Sair</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-
-    <!-- Conteudo--->
-    <main>
-      <div class="content">
-          <div class="img-fundo">
-               <img src="../../assets/images/fundo-lg.jpg" alt="">
           </div>
-        <div class="content-quadrado">
-          <div class="content-tittle">
-            <div class="content-container">
-              <h1>CONFIGURAÇÕES DE USUARIO</h1>
-              <h3>Modifique de acordo com sua preferencia.</h3>
-            </div>
-            <div class="buttons">
-              <button type="button"><h2>Linguagem da Plataforma</h2></button>
-              <button type="button"><h2>Trocar foto de perfil</h2></button>
-              <button type="button"><h2>Alterar senha</h2></button>
-              <button type="button"><h2>Alterar nome</h2></button>
-            </div>
-            <div class="buttons-space">
-              <a href="../home/index.html"><button type="button"><h2>Salvar e sair</h2></button></a>
-              <div class="buttons-space2">
-                <button  type="button"><h2>Cancelar</h2></button>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../home/index.html">
+          <i class="fas fa-home"></i><span class="item-nav">Início</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../ranking/index.html">
+          <i class="fas fa-user-group"></i><span class="item-nav">Amigos</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../nova-mesa/index.html">
+          <i class="fas fa-plus"></i><span class="item-nav">Criar nova mesa</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../historico/index.html">
+          <i class="fas fa-clock-rotate-left"></i><span class="item-nav">Histórico</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon active" href="../configuracoes/index.html">
+          <i class="fas fa-cog"></i><span class="item-nav">Configurações</span>
+        </a>
+      </li>
+      <li>
+        <a href="../login/index.html" class="logout">
+          <i class="fas fa-sign-out"></i><span class="item-nav">Sair</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-              </div>
+  <!-- ── MAIN ── -->
+  <main>
+
+    <!-- Header -->
+    <header class="page-header">
+      <h1>Suas <span>Configurações</span></h1>
+      <p>Personalize sua conta conforme preferir</p>
+    </header>
+
+    <!-- Layout 2 colunas -->
+    <div class="settings-layout">
+
+      <!-- ── Coluna principal ── -->
+      <div class="settings-col">
+
+        <!-- PERFIL -->
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-icon"><i class="fas fa-user"></i></div>
+            <div>
+              <h2>Perfil</h2>
+              <p>Seu nome e foto de exibição</p>
             </div>
-            <div class="content-p">
-              <h3>@2022 Divide Já</h3>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label"><i class="fas fa-id-badge"></i> Nome de exibição</div>
+              <div class="setting-desc">Aparece para todos os seus amigos nas mesas</div>
             </div>
+            <div class="inline-input">
+              <input type="text" id="inputNome" placeholder="Felipe Monteleão" value="Felipe Monteleão" />
+              <button class="btn btn-sm-accent" onclick="salvarNome()">
+                <i class="fas fa-check"></i> Salvar
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label"><i class="fas fa-camera"></i> Foto de perfil</div>
+              <div class="setting-desc">Formatos aceitos: JPG, PNG — máx. 2 MB</div>
+            </div>
+            <button class="btn btn-sm-ghost" onclick="document.getElementById('fileInput').click()">
+              <i class="fas fa-upload"></i> Trocar foto
+            </button>
+            <input type="file" id="fileInput" accept="image/*" onchange="trocarFoto(event)" />
           </div>
         </div>
-      </div>
-    </main>
 
-    <!-- Logo --->
-    <footer>
-    </footer>
-  </body>
+        <!-- SEGURANÇA -->
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-icon"><i class="fas fa-lock"></i></div>
+            <div>
+              <h2>Segurança</h2>
+              <p>Senha e acesso à conta</p>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label"><i class="fas fa-key"></i> Senha</div>
+              <div class="setting-desc">Última alteração há mais de 30 dias</div>
+            </div>
+            <button class="btn btn-sm-ghost" onclick="abrirModalSenha()">
+              <i class="fas fa-pen"></i> Alterar senha
+            </button>
+          </div>
+        </div>
+
+        <!-- PREFERÊNCIAS -->
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-icon"><i class="fas fa-sliders"></i></div>
+            <div>
+              <h2>Preferências</h2>
+              <p>Idioma e comportamento do app</p>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label"><i class="fas fa-globe"></i> Idioma da plataforma</div>
+              <div class="setting-desc">Define o idioma de toda a interface</div>
+            </div>
+            <select class="styled-select" id="selectIdioma">
+              <option value="pt-BR" selected>🇧🇷 Português (BR)</option>
+              <option value="en-US">🇺🇸 English (US)</option>
+              <option value="es-ES">🇪🇸 Español</option>
+            </select>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label"><i class="fas fa-bell"></i> Notificações</div>
+              <div class="setting-desc">Avisos sobre mesas e cobranças</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggleNotif" checked />
+              <div class="toggle-track"></div>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label"><i class="fas fa-moon"></i> Tema escuro</div>
+              <div class="setting-desc">Ativo por padrão no Divide Já</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggleTema" checked />
+              <div class="toggle-track"></div>
+            </label>
+          </div>
+        </div>
+
+        <!-- ZONA DE PERIGO -->
+        <div class="section-card danger-card">
+          <div class="section-head">
+            <div class="section-head-icon"><i class="fas fa-triangle-exclamation"></i></div>
+            <div>
+              <h2>Zona de perigo</h2>
+              <p>Ações irreversíveis — prossiga com cuidado</p>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Excluir conta</div>
+              <div class="setting-desc">Remove permanentemente todos os seus dados e histórico</div>
+            </div>
+            <button class="btn btn-sm-danger" onclick="confirmarExclusao()">
+              <i class="fas fa-trash-can"></i> Excluir conta
+            </button>
+          </div>
+        </div>
+
+        <!-- SAVE BAR -->
+        <div class="save-bar">
+          <p>Alterações não salvas serão perdidas ao sair</p>
+          <div class="save-actions">
+            <button class="btn-cancel" onclick="location.href='../home/index.html'">
+              <i class="fas fa-xmark"></i> Cancelar
+            </button>
+            <button class="btn-save" onclick="salvarTudo()">
+              <i class="fas fa-floppy-disk"></i> Salvar alterações
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Card de perfil lateral ── -->
+      <div class="profile-card">
+
+        <div class="profile-avatar-wrap">
+          <img class="profile-avatar" id="profileAvatar" src="../../assets/images/gordinho.jpg" alt="Avatar" />
+          <button class="avatar-upload-btn" onclick="document.getElementById('fileInput').click()" title="Trocar foto">
+            <i class="fas fa-camera"></i>
+          </button>
+        </div>
+
+        <div class="profile-name" id="profileNome">Felipe Monteleão</div>
+        <div class="profile-tag">#3345</div>
+
+        <div class="profile-divider"></div>
+
+        <div class="profile-stat">
+          <span class="profile-stat-label"><i class="fas fa-table"></i> Mesas criadas</span>
+          <span class="profile-stat-val">0</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-label"><i class="fas fa-user-group"></i> Amigos</span>
+          <span class="profile-stat-val">0</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-label"><i class="fas fa-receipt"></i> Total dividido</span>
+          <span class="profile-stat-val">R$ 0</span>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="page-footer">© 2024 Divide Já — Todos os direitos reservados</p>
+
+  </main>
+
+  <!-- ── MODAL ALTERAR SENHA ── -->
+  <div class="modal-backdrop" id="modalSenha" onclick="fecharModalFora(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Alterar senha</h2>
+        <button class="modal-close" onclick="fecharModalSenha()"><i class="fas fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-field">
+        <label>Senha atual</label>
+        <div class="mw">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="senhaAtual" placeholder="••••••••" />
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label>Nova senha</label>
+        <div class="mw">
+          <i class="fas fa-key"></i>
+          <input type="password" id="senhaNova" placeholder="Mínimo 8 caracteres" />
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label>Confirmar nova senha</label>
+        <div class="mw">
+          <i class="fas fa-check-double"></i>
+          <input type="password" id="senhaConfirm" placeholder="Repita a nova senha" />
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-sm-ghost" onclick="fecharModalSenha()">Cancelar</button>
+        <button class="btn btn-sm-accent" onclick="salvarSenha()">
+          <i class="fas fa-floppy-disk"></i> Salvar senha
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ── Modal senha ── */
+    function abrirModalSenha() {
+      document.getElementById('modalSenha').classList.add('open');
+    }
+    function fecharModalSenha() {
+      document.getElementById('modalSenha').classList.remove('open');
+      ['senhaAtual','senhaNova','senhaConfirm'].forEach(id => document.getElementById(id).value = '');
+    }
+    function fecharModalFora(e) {
+      if (e.target === document.getElementById('modalSenha')) fecharModalSenha();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModalSenha(); });
+
+    function salvarSenha() {
+      const nova    = document.getElementById('senhaNova').value;
+      const confirm = document.getElementById('senhaConfirm').value;
+      if (nova.length < 8) { alert('A senha deve ter pelo menos 8 caracteres.'); return; }
+      if (nova !== confirm) { alert('As senhas não coincidem.'); return; }
+      fecharModalSenha();
+      // Chamar lógica real aqui futuramente (checagem de senha atual, atualização no backend, etc.)
+    }
+
+    /* ── Trocar foto ── */
+    function trocarFoto(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      document.getElementById('profileAvatar').src = url;
+      document.getElementById('navAvatar').src = url;
+    }
+
+    /* ── Salvar nome ── */
+    function salvarNome() {
+      const nome = document.getElementById('inputNome').value.trim();
+      if (!nome) return;
+      document.getElementById('profileNome').textContent = nome;
+      document.getElementById('navNome').textContent = nome;
+    }
+
+    /* ── salva tudo ── */
+    function salvarTudo() {
+      salvarNome();
+      //  lógica real aqui (idioma, notificações, etc.)
+      location.href = '../home/index.html';
+    }
+
+    /* ──  exclusão ── */
+    function confirmarExclusao() {
+      if (confirm('Tem certeza? Esta ação é irreversível e todos os seus dados serão removidos.')) {
+        location.href = '../cadastro/index.html';
+      }
+    }
+  </script>
+
+</body>
 </html>

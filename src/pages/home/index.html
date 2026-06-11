@@ -403,9 +403,16 @@
         border-radius: 12px;
         padding: 16px;
         text-align: center;
+        display: block;
         transition: border-color var(--transition);
       }
       .stat-chip:hover { border-color: rgba(200,241,53,0.2); }
+
+      .stat-link {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
 
       .stat-chip .val {
         font-family: 'Syne', sans-serif;
@@ -430,7 +437,7 @@
     <nav>
       <ul>
         <li>
-          <a href="#" class="usuario">
+          <a href="../configuracoes/index.html" class="usuario">
             <img src="../../assets/images/gordinho.jpg" alt="Foto de perfil" />
             <div>
               <span class="nav-titulo">Felipe Monteleão</span>
@@ -505,18 +512,18 @@
 
       <!-- Stats rápidas -->
       <div class="stats-row">
-        <div class="stat-chip">
+        <a class="stat-chip stat-link" href="../nova-mesa/index.html">
           <span class="val">0</span>
           <span class="lbl">Mesas ativas</span>
-        </div>
-        <div class="stat-chip">
+        </a>
+        <a class="stat-chip stat-link" href="../ranking/index.html">
           <span class="val">0</span>
           <span class="lbl">Amigos</span>
-        </div>
-        <div class="stat-chip">
+        </a>
+        <a class="stat-chip stat-link" href="../historico/index.html">
           <span class="val">R$ 0</span>
           <span class="lbl">Total dividido</span>
-        </div>
+        </a>
       </div>
 
       <!-- Cards de conteúdo -->

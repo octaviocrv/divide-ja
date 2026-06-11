@@ -1,117 +1,903 @@
 <!DOCTYPE html>
-<html lang="pt_br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Divide Já</title>
-    <!-- CSS Projeto --->
-    <link rel="stylesheet" href="../ranking/style.css" />
-    <link    
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    />
+<html lang="pt-BR">
 
-    <link rel="stylesheet" href="../adicionar-pessoas/style.css" />
-    <link>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divide Já — Amigos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --surface-2: #1a1e28;
+      --border: rgba(255, 255, 255, 0.06);
+      --accent: #c8f135;
+      --accent-dim: rgba(200, 241, 53, 0.10);
+      --accent-glow: rgba(200, 241, 53, 0.25);
+      --text: #f0f2f5;
+      --text-muted: #5a6070;
+      --text-mid: #8b929f;
+      --danger: #ff4e4e;
+      --gold: #f5c842;
+      --silver: #a0aab8;
+      --bronze: #c87941;
+      --nav-w: 240px;
+      --radius: 16px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-  <body>
-    <!-- Nav Bar --->
-    <nav>
-      <ul>
-        <li>
-          <a href="#" class="usuario">
-            <img src="../../assets/images/gordinho.jpg" alt="" />
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      width: var(--nav-w);
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      padding: 24px 0 32px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 2px;
+    }
+
+    nav ul li:first-child {
+      padding: 0 16px 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .usuario {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+
+    .usuario:hover {
+      background: var(--accent-dim);
+    }
+
+    .usuario img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .nav-titulo {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+      line-height: 1.2;
+    }
+
+    .nav-subtitulo {
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      display: block;
+    }
+
+    nav ul li a.padding-icon {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 28px;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 14px;
+      transition: color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    nav ul li a.padding-icon::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 3px;
+      height: 60%;
+      background: var(--accent);
+      border-radius: 0 3px 3px 0;
+      transition: transform 0.2s var(--ease);
+    }
+
+    nav ul li a.padding-icon:hover,
+    nav ul li a.padding-icon.active {
+      color: var(--text);
+      background: var(--accent-dim);
+    }
+
+    nav ul li a.padding-icon:hover::before,
+    nav ul li a.padding-icon.active::before {
+      transform: translateY(-50%) scaleY(1);
+    }
+
+    nav ul li a.padding-icon i {
+      width: 18px;
+      font-size: 15px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    nav ul li a.padding-icon.active i {
+      color: var(--accent);
+    }
+
+    nav ul li:last-child {
+      margin-top: auto;
+      padding: 0 16px;
+    }
+
+    .logout {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-radius: 10px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .logout:hover {
+      color: var(--danger);
+      background: rgba(255, 78, 78, 0.08);
+    }
+
+    /* ── MAIN ── */
+    main {
+      margin-left: var(--nav-w);
+      flex: 1;
+      padding: 32px 40px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      animation: fadeUp 0.45s var(--ease) both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    .page-header h1 span {
+      color: var(--accent);
+    }
+
+    .page-header p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── SEARCH BAR ── */
+    .search-wrap {
+      position: relative;
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .search-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      height: 42px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0 16px 0 38px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-wrap input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ── RANKING TABLE ── */
+    .ranking-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .ranking-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .ranking-table thead tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ranking-table thead th {
+      padding: 14px 20px;
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      text-align: left;
+    }
+
+    .ranking-table thead th:first-child {
+      width: 56px;
+      text-align: center;
+    }
+
+    .ranking-table thead th:last-child {
+      text-align: right;
+    }
+
+    .ranking-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.18s;
+      animation: rowIn 0.35s var(--ease) both;
+    }
+
+    @keyframes rowIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .ranking-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .ranking-table tbody tr:hover {
+      background: var(--surface-2);
+    }
+
+    .ranking-table td {
+      padding: 14px 20px;
+      font-size: 14px;
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    /* Posição */
+    .td-pos {
+      text-align: center;
+    }
+
+    .pos-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .pos-1 {
+      background: rgba(245, 200, 66, 0.15);
+      color: var(--gold);
+    }
+
+    .pos-2 {
+      background: rgba(160, 170, 184, 0.15);
+      color: var(--silver);
+    }
+
+    .pos-3 {
+      background: rgba(200, 121, 65, 0.15);
+      color: var(--bronze);
+    }
+
+    .pos-n {
+      background: var(--surface-2);
+      color: var(--text-muted);
+    }
+
+    /* personagem + nome */
+    .td-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+
+    .user-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+    }
+
+    .user-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .td-stat {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      color: var(--text-mid);
+    }
+
+    .td-actions {
+      text-align: right;
+    }
+
+    .action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-btn:hover {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      padding: 64px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .empty-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .empty-state h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-mid);
+    }
+
+    .empty-state p {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 240px;
+      line-height: 1.6;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s var(--ease);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0d0f14;
+    }
+
+    .btn-primary:hover {
+      background: #d8ff45;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.14);
+      background: var(--surface-2);
+    }
+
+    /* ── MODAL ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s var(--ease);
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.25s var(--ease);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-backdrop.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-header h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s;
+    }
+
+    .modal-close:hover {
+      color: var(--danger);
+      border-color: rgba(255, 78, 78, 0.3);
+      background: rgba(255, 78, 78, 0.08);
+    }
+
+    .modal-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-mid);
+      margin-bottom: 7px;
+      letter-spacing: 0.03em;
+    }
+
+    .modal-input-wrap {
+      position: relative;
+    }
+
+    .modal-input-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .modal-input-wrap input {
+      width: 100%;
+      height: 48px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0 16px 0 38px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .modal-input-wrap input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .modal-input-wrap input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <ul>
+      <li>
+        <a href="#" class="usuario">
+          <img src="../../assets/images/gordinho.jpg" alt="Foto de perfil" />
+          <div>
             <span class="nav-titulo">Felipe Monteleão</span>
             <span class="nav-subtitulo">#3345</span>
-          </a>
-        </li>
+          </div>
+        </a>
+      </li>
 
-        <li>
-          <a class="padding-icon" href="../home/index.html">
-            <i class="fas fa-home"></i>
-            <span class="item-nav">Inicio</span>
-          </a>
-        </li>
+      <li>
+        <a class="padding-icon" href="../home/index.html">
+          <i class="fas fa-home"></i>
+          <span class="item-nav">Início</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon active" href="../ranking/index.html">
+          <i class="fas fa-user-group"></i>
+          <span class="item-nav">Amigos</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../nova-mesa/index.html">
+          <i class="fas fa-plus"></i>
+          <span class="item-nav">Criar nova mesa</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../historico/index.html">
+          <i class="fas fa-clock-rotate-left"></i>
+          <span class="item-nav">Histórico</span>
+        </a>
+      </li>
+      <li>
+        <a class="padding-icon" href="../configuracoes/index.html">
+          <i class="fas fa-cog"></i>
+          <span class="item-nav">Configurações</span>
+        </a>
+      </li>
+      <li>
+        <a href="../login/index.html" class="logout">
+          <i class="fas fa-sign-out"></i>
+          <span class="item-nav">Sair</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-        <li>
-          <a class="padding-icon" href="../ranking/index.html">
-            <i class="fas fa-user"></i>
-            <span class="item-nav">Amigos</span>
-          </a>
-        </li>
+  <!-- ── MAIN ── -->
+  <main>
 
-        <li>
-          <a class="padding-icon" href="../nova-mesa/index.html">
-            <i class="fas fa-plus"></i>
-            <span class="item-nav">Criar nova mesa</span>
-          </a>
-        </li>
+    <!-- Header -->
+    <header class="page-header">
+      <div>
+        <h1>Ranking de <span>Amigos</span></h1>
+        <p>Veja quem mais divide contas com você</p>
+      </div>
+      <button class="btn btn-primary" onclick="abrirModal()">
+        <i class="fas fa-user-plus"></i> Adicionar amigo
+      </button>
+    </header>
 
-        <li>
-          <a class="padding-icon" href="../historico/index.html">
-            <i class="fas fa-clock-rotate-left"></i>
-            <span class="item-nav">Historico</span>
-          </a>
-        </li>
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <i class="fas fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Buscar amigo..." oninput="filtrarAmigos()" />
+      </div>
+    </div>
 
-        <li>
-          <a class="padding-icon" href="../configuracoes/index.html">
-            <i class="fas fa-cog"></i>
-            <span class="item-nav">Configurações</span>
-          </a>
-        </li>
+    <!-- Tabela -->
+    <div class="ranking-card">
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Amigo</th>
+            <th>Mesas juntos</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="rankingBody">
+        </tbody>
+      </table>
 
-        <li>
-          <a href="../login/index.html" class="logout">
-            <i class="fas fa-sign-out"></i>
-            <span class="item-nav">Sair</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <!-- Nav fim --->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon"><i class="fas fa-user-group"></i></div>
+        <h3>Nenhum amigo adicionado</h3>
+        <p>Adicione amigos para dividirem contas juntos e acompanhar o ranking</p>
+        <button class="btn btn-primary" onclick="abrirModal()" style="margin-top:4px">
+          <i class="fas fa-user-plus"></i> Adicionar amigo
+        </button>
+      </div>
+    </div>
 
-    <!-- Conteudo--->
+  </main>
 
-    <main>
-      <div class="content">
-          <!-- <div class="img-fundo">
-               <img src="#" alt="">
-          </div> -->
-        <div class="content-quadrado">
-          <div class="container">
-            <div class="header">
-              <span>Ranking de amigos</span>
-            </div>
-        
-            <div class="divTable">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!--Apresenta lista hankeada-->
-                </tbody>
-              </table>
-            </div>        
-            <div class="modal-container">
-              <div class="modal">
-                <form>
-                  <label for="m-nome">Nome</label>
-                  <input id="m-nome" type="text" required />
-                  <button id="btnSalvar">Salvar</button>
-                </form>
-              </div>
-            </div>
+  <!-- ── MODAL ADICIONAR AMIGO ── -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="fecharModalFora(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Adicionar amigo</h2>
+        <button class="modal-close" onclick="fecharModal()">
+          <i class="fas fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-field">
+        <label for="m-nome">Nome</label>
+        <div class="modal-input-wrap">
+          <i class="fas fa-user"></i>
+          <input id="m-nome" type="text" placeholder="Nome do amigo" required />
         </div>
       </div>
-    </main>
 
-    <!-- Conteudo--->
-  </body>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="fecharModal()">Cancelar</button>
+        <button class="btn btn-primary" id="btnSalvar" onclick="salvarAmigo()">
+          <i class="fas fa-check"></i> Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── helpss
+    function abrirModal() {
+      document.getElementById('modalBackdrop').classList.add('open');
+      setTimeout(() => document.getElementById('m-nome').focus(), 200);
+    }
+
+    function fecharModal() {
+      document.getElementById('modalBackdrop').classList.remove('open');
+      document.getElementById('m-nome').value = '';
+    }
+
+    function fecharModalFora(e) {
+      if (e.target === document.getElementById('modalBackdrop')) fecharModal();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') fecharModal();
+    });
+
+    // ── vamos renderizar o rank
+    //  função é chamada pelo script.js original sempre que a lista mudar
+    // se o script.js já popula o tbody diretamente, mantemos como estava
+    function renderizarRanking(amigos) {
+      const body = document.getElementById('rankingBody');
+      const empty = document.getElementById('emptyState');
+
+      if (!amigos || amigos.length === 0) {
+        body.innerHTML = '';
+        empty.style.display = 'flex';
+        return;
+      }
+
+      empty.style.display = 'none';
+
+      body.innerHTML = amigos.map((a, i) => {
+        const pos = i + 1;
+        const posClass = pos <= 3 ? `pos-${pos}` : 'pos-n';
+        const posLabel = pos <= 3
+          ? ['🥇', '🥈', '🥉'][pos - 1]
+          : pos;
+        const inicial = (a.nome || '?')[0].toUpperCase();
+
+        return `
+          <tr style="animation-delay:${i * 0.05}s">
+            <td class="td-pos">
+              <span class="pos-badge ${posClass}">${posLabel}</span>
+            </td>
+            <td>
+              <div class="td-user">
+                <div class="avatar">${inicial}</div>
+                <div>
+                  <span class="user-name">${a.nome}</span>
+                  <span class="user-tag">${a.mesas ?? 0} mesa${(a.mesas ?? 0) !== 1 ? 's' : ''}</span>
+                </div>
+              </div>
+            </td>
+            <td class="td-stat">${a.mesas ?? 0}</td>
+            <td class="td-actions">
+              <button class="action-btn" title="Remover amigo" onclick="removerAmigo(${i})">
+                <i class="fas fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // ── busca ──
+    function filtrarAmigos() {
+      const termo = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#rankingBody tr');
+      rows.forEach(row => {
+        const nome = row.querySelector('.user-name')?.textContent.toLowerCase() ?? '';
+        row.style.display = nome.includes(termo) ? '' : 'none';
+      });
+    }
+
+    // ── Salvar amigo (.... modificar dps)──
+    function salvarAmigo() {
+      const nome = document.getElementById('m-nome').value.trim();
+      if (!nome) {
+        document.getElementById('m-nome').focus();
+        return;
+      }
+
+      if (typeof window.adicionarAmigo === 'function') {
+        window.adicionarAmigo(nome);
+      }
+      fecharModal();
+    }
+
+    // ── remove amigo (.... modificar dps)──
+    function removerAmigo(index) {
+      if (typeof window.deletarAmigo === 'function') {
+        window.deletarAmigo(index);
+      }
+    }
+
+    renderizarRanking([]);
+  </script>
+
   <script src="../ranking/script.js"></script>
+</body>
+
 </html>
